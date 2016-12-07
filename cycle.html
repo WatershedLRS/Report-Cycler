@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Watershed Reports</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        #container {
+            border: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute; 
+        }
+    </style>
+</head>
+<body>
+    <iframe src="https://watershedlrs.com" id="container">Your browser doesn't support iFrames.</iframe>
+</body>
+<script type="text/javascript">
+    // Warning: this script will loop forever if report list contains less than 2 unique report urls. 
+    var config = {
+        reportList: {
+            'category-one': {
+                'report-one-a': 'https://www.watershedlrs.com/what-we-solve'
+            },
+            'category-two': {
+                'report-two-a': 'https://www.watershedlrs.com/product',
+                'report-two-b': 'https://www.watershedlrs.com/product/pricing'
+            }
+        },
+        timerSeconds: 30
+    };
+
+    var interval = setInterval(cycleReport, config.timerSeconds * 1000);
+
+    function cycleReport (){
+        var categories = Object.keys(config.reportList);
+        var category = config.reportList[categories[categories.length * Math.random() << 0]];
+        var reports = Object.keys(category);
+        var newSrc = category[reports[reports.length * Math.random() << 0]]
+        var oldSrc = document.getElementById('container').src;
+        if (newSrc == oldSrc) {
+            cycleReport ();
+        } else {
+            document.getElementById('container').src = newSrc;
+            console.log('new url: ' + newSrc);
+        }
+    }
+</script>
+</html>
